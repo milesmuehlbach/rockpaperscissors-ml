@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/webcam.js') }}" defer></script>
+    <style>
+        .fade-in {
+            animation: fadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.96);}
+            to { opacity: 1; transform: scale(1);}
+        }
+
+        .animated-border {
+            position: relative;
+            z-index: 1;
+        }
+        .animated-border::before {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            z-index: -1;
+            border-radius: 1rem;
+            background: linear-gradient(270deg, #f87171, #facc15, #4ade80, #f87171);
+            background-size: 600% 600%;
+            animation: borderGradient 6s ease infinite;
+        }
+        @keyframes borderGradient {
+            0% {background-position:0% 50%}
+            50% {background-position:100% 50%}
+            100% {background-position:0% 50%}
+        }
+
+        .pop {
+            animation: popResult 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes popResult {
+            0% { transform: scale(0.7); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        .pulse:hover {
+            animation: pulseBtn 0.6s;
+        }
+        @keyframes pulseBtn {
+            0% { transform: scale(1);}
+            50% { transform: scale(1.08);}
+            100% { transform: scale(1);}
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-screen flex flex-col items-center justify-center">
+    <div class="fade-in bg-gray-800 bg-opacity-80 rounded-2xl shadow-2xl p-10 flex flex-col items-center w-full max-w-3xl border border-gray-700">
+        <h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-yellow-400 to-green-400 mb-4 drop-shadow-lg">
+            Rock Paper Scissors
+        </h1>
+        <p class="mb-6 text-lg text-gray-300 animate-fade-in">Hold your sign up to the camera!</p>
+        <p class="mb-6 text-lg text-gray-300 text-center animate-fade-in">
+            For best results, make sure the back of your hand faces the camera.<br>
+            In addition, make sure to put your entire hand in the frame.
+        </p>
+        <div class="relative mb-6 animated-border">
+            <video id="webcam" class="rounded-xl shadow-lg w-72 h-72 object-cover bg-black" autoplay></video>
+            <canvas id="canvas" width="224" height="224" style="display:none;"></canvas>
+        </div>
+        <button id="capture" class="pulse mb-4 px-6 py-3 bg-gradient-to-r from-red-500 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:from-red-400 hover:to-yellow-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-300">
+            Capture Sign
+        </button>
+        <div id="result" class="mb-4 text-2xl font-bold text-lime-400 drop-shadow"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const resultDiv = document.getElementById('result');
+            if (!resultDiv) return;
+            const observer = new MutationObserver(() => {
+                resultDiv.classList.remove('pop');
+                void resultDiv.offsetWidth;
+                if(resultDiv.textContent.trim() !== "") {
+                    resultDiv.classList.add('pop');
+                }
+            });
+            observer.observe(resultDiv, { childList: true, subtree: true, characterData: true });
+        });
+    </script>
+</body>
+</html>
