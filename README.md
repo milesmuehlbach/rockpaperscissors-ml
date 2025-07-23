@@ -60,6 +60,7 @@ python3 ./rpscli.py
 ```sh
 python3 -m webapp.app
 ```
+The server should now be running on port 5000. If you want to access it from localhost, you can visit it at `http://localhost:5000` in your browser.
 
 > [!NOTE]
 > The development server is accessible over the network, but most browsers block webcam access for non-HTTPS or non-`localhost` sites.  
