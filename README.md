@@ -1,35 +1,126 @@
-# Rock Paper Scissors: Machine Learning edition
+# Rock Paper Scissors: Machine Learning Edition
 
-### Overview
-This is a project that uses a [dataset](https://www.kaggle.com/datasets/glushko/rock-paper-scissors-dataset), trained on Rock, Paper, and Scissors hand signs, to play a game of real rock paper scissors with the computer. There are two options for playing, cli (availible through `rpscli.py`) and webapp, but both will not be availible until after setup has been completed. This project has been designed for running on the Nvidia Jetson Orin Nano, running Jetpack 6.x. On the backend, it implements a python api through the form of `rpsapi`, designed for handling both gameplay and fetching of hand signs. The webapp uses tailwindcss for the frontend, and implements flask in the backend.
+## Overview
 
-### Setup 
-To start with setting up, first clone the repository. You must be on linux to make use of this repository, there is no plan for windows support at this time.
-```
+This project uses a [Rock Paper Scissors hand sign dataset](https://www.kaggle.com/datasets/glushko/rock-paper-scissors-dataset) and a custom-trained machine learning model to let you play real-time Rock Paper Scissors against your computer.  
+You can play either via the command line (`rpscli.py`) or a modern web interface.  
+The project is designed for the Nvidia Jetson Orin Nano running JetPack 6.x, but may work on other Linux systems with compatible dependencies.
+
+- Backend: Python (Flask), custom API (`rpsapi`)
+- Frontend: TailwindCSS, HTML, JavaScript
+- Model: YOLO, trained on hand sign images
+
+---
+
+## Setup
+
+> **Important**  
+> This project is designed for Linux. Windows is not supported.
+
+### 1. Clone the Repository
+
+```sh
 git clone https://github.com/milesmuehlbach/rockpaperscissors-ml.git
+cd rockpaperscissors-ml
 ```
-After you've done that, enter the directory and install the dependencies.
-```
-cd rockpaperscissors-ml && scripts/installdependencies.sh
-```
-If it throws an error, then follow what the error tells you to do.
 
-At this step, we'll be training the model, as I don't provide pre-trained models. This will take 30+ minutes, so make sure you're prepared.
+### 2. Install Dependencies
+
+```sh
+scripts/installdependencies.sh
 ```
+
+> **Tip**  
+> If you encounter errors during installation, carefully read the error messages and install any missing system packages as instructed.
+
+### 3. Train the Model
+
+> **Warning**  
+> No pre-trained model is provided.  
+> Training will take 30+ minutes and requires a CUDA-capable GPU (Jetson recommended).
+
+```sh
 scripts/trainmodel.sh
 ```
-After the model is trained, you should be good to start using the app! Follow the instructions under Running to proceed.
 
-### Running
-#### Running CLI
-(assuming you're in root directory of project)
-```
+After the model is trained, you should be good to start using the app. Follow the instructions under Running to proceed.
+
+---
+
+## Running
+
+### Command Line Interface (CLI)
+
+(Assuming you're in the root directory of the project)
+
+```sh
 python3 ./rpscli.py
 ```
-#### Running Webapp
-(assuming you're in root directory of project)
-```
+
+### Web Application
+
+(Assuming you're in the root directory of the project)
+
+```sh
 python3 -m webapp.app
 ```
-> [!NOTE]  
-> While the dev server for the webapp is configured to be availible over the network, most browsers do not allow webcam perms for non-localhost or non-https requests. You may need to set special flags in your browser of choice or configure https.
+
+> **Note**  
+> The development server is accessible over the network, but most browsers block webcam access for non-HTTPS or non-`localhost` sites.  
+> For best results, run the webapp on `localhost` or configure HTTPS.  
+> You may need to set special flags in your browser to allow webcam access on local network addresses.
+
+---
+
+## Project Structure
+
+```
+rockpaperscissors-ml/
+├── rpscli.py           # Command-line interface
+├── webapp/             # Flask web application
+│   ├── app.py
+│   ├── templates/
+│   └── static/
+├── rpsapi/             # API and ML model logic
+│   └── fetchsign.py
+├── scripts/            # Setup and training scripts
+│   ├── installdependencies.sh
+│   └── trainmodel.sh
+└── README.md
+```
+
+---
+
+## Features
+
+- Real-time hand sign recognition using your webcam
+- Play against a random computer opponent
+- CLI and web interfaces
+- Designed for Jetson Orin Nano, but adaptable to other Linux systems
+
+---
+
+## Troubleshooting
+
+- **Webcam not working?**
+  - Make sure you are using `localhost` or HTTPS.
+  - Check browser permissions for camera access.
+  - See browser console for errors.
+
+- **Model not found?**
+  - Ensure you have run `scripts/trainmodel.sh` and the model file exists in `rpsapi/model/`.
+
+- **Other issues?**
+  - Check the Issues section on GitHub or open a new issue with details.
+
+---
+
+## License
+
+MIT License. See [LICENSE](LICENSE) for details.
+
+---
+
+> **Tip**  
+> Contributions, suggestions, and feedback are welcome!  
+> Please open an issue or submit a pull request on GitHub.
