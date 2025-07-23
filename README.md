@@ -10,11 +10,9 @@ The project is designed for the Nvidia Jetson Orin Nano running JetPack 6.x, but
 - Frontend: TailwindCSS, HTML, JavaScript
 - Model: YOLO, trained on hand sign images
 
----
-
 ## Setup
 
-> **Important**  
+> [!IMPORTANT]  
 > This project is designed for Linux. Windows is not supported.
 
 ### 1. Clone the Repository
@@ -30,12 +28,12 @@ cd rockpaperscissors-ml
 scripts/installdependencies.sh
 ```
 
-> **Tip**  
+> [!TIP]
 > If you encounter errors during installation, carefully read the error messages and install any missing system packages as instructed.
 
 ### 3. Train the Model
 
-> **Warning**  
+> [!WARNING] 
 > No pre-trained model is provided.  
 > Training will take 30+ minutes and requires a CUDA-capable GPU (Jetson recommended).
 
@@ -44,8 +42,6 @@ scripts/trainmodel.sh
 ```
 
 After the model is trained, you should be good to start using the app. Follow the instructions under Running to proceed.
-
----
 
 ## Running
 
@@ -65,12 +61,10 @@ python3 ./rpscli.py
 python3 -m webapp.app
 ```
 
-> **Note**  
+> [!NOTE]
 > The development server is accessible over the network, but most browsers block webcam access for non-HTTPS or non-`localhost` sites.  
 > For best results, run the webapp on `localhost` or configure HTTPS.  
 > You may need to set special flags in your browser to allow webcam access on local network addresses.
-
----
 
 ## Project Structure
 
@@ -82,23 +76,14 @@ rockpaperscissors-ml/
 │   ├── templates/
 │   └── static/
 ├── rpsapi/             # API and ML model logic
-│   └── fetchsign.py
+│   ├── fetchsign.py
+│   └── rps.py
 ├── scripts/            # Setup and training scripts
 │   ├── installdependencies.sh
-│   └── trainmodel.sh
+│   ├── trainmodel.sh
+│   └── runtailwinddev.sh
 └── README.md
 ```
-
----
-
-## Features
-
-- Real-time hand sign recognition using your webcam
-- Play against a random computer opponent
-- CLI and web interfaces
-- Designed for Jetson Orin Nano, but adaptable to other Linux systems
-
----
 
 ## Troubleshooting
 
@@ -113,14 +98,6 @@ rockpaperscissors-ml/
 - **Other issues?**
   - Check the Issues section on GitHub or open a new issue with details.
 
----
-
-## License
-
-MIT License. See [LICENSE](LICENSE) for details.
-
----
-
-> **Tip**  
+> [!TIP]
 > Contributions, suggestions, and feedback are welcome!  
 > Please open an issue or submit a pull request on GitHub.
