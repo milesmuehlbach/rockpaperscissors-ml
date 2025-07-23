@@ -17,3 +17,4 @@ else
 fi
 
 cp runs/train/weights/best.pt ../rsapi/model/rockpaperscissors.pt
+cd ..
