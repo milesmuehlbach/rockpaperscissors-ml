@@ -1,0 +1,3 @@
+# Ignore compiled CSS for language stats
+webapp/static/css/output.css linguist-vendored
+
