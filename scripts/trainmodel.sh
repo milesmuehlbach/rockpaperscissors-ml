@@ -10,11 +10,12 @@ fi
 
 yolo classify train data=./ model=yolo11n-cls.pt epochs=100 imgsz=64
 
-if [ -d "runs/train/weights/best.pt" ]; then
+# Fix: Check for file, not directory
+if [ -f "runs/classify/train/weights/best.pt" ]; then
     echo "Training completed successfully. The model and results are saved in the 'runs' directory."
+    cp runs/classify/train/weights/best.pt ../rpsapi/model/rockpaperscissors.pt
 else
     echo "Training failed or no results were generated."
 fi
 
-cp runs/train/weights/best.pt ../rsapi/model/rockpaperscissors.pt
-cd ..
+cd
